@@ -14,6 +14,7 @@ const Login = () => {
   });
   const [errors, setErrors] = useState({});
   const [authError, setAuthError] = useState("");
+  const [message, setMessage] = useState("");
 
   const onChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -46,6 +47,7 @@ const Login = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     setAuthError("");
+   
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -58,6 +60,20 @@ const Login = () => {
         loggedIn.password,
         loggedIn.rememberme
       );
+      if(res) {
+        setMessage("Login successful");
+        setLoggedIn({
+          email: "",
+          password: "",
+          rememberme: false
+        })
+        setTimeout(() => {
+          setMessage("")
+        }, 3000);
+      } else{
+        setMessage("Login failed");
+      }
+
       if (!res || res.error) {
         setAuthError("Invalid email or password");
       }
@@ -67,7 +83,7 @@ const Login = () => {
     }
 
     if (loggedIn.rememberme) {
-      localStorage.setItem("rememberedicon", details.email);
+      localStorage.setItem("rememberedicon", loggedIn.email);
     }
   };
   return (
@@ -84,6 +100,9 @@ const Login = () => {
         onSubmit={onSubmitHandler}
         className="md:px-26 px-4 md:w-1/2 md:block mx-auto md:mx-0 md:text-xs lg:text-sm xl:text-base  justify-center items-center"
       >
+        {message && (
+            <p className="text-green-500 text-sm text-center">{message}</p>
+          ) }
         <div className="text-center">
           <h1 className="text-2xl font-bold py-3">LOG IN</h1>
           <p className="text-[#E5E7EB]">
@@ -129,7 +148,7 @@ const Login = () => {
         </div>
         <div className="flex py-2 justify-between">
           <div className="flex gap-2 items-center">
-            <input type="checkbox" name="remember" id="remember" />
+            <input type="checkbox" name="rememberme" id="remember" />
             <p>Remember me</p>
           </div>
           <div>
@@ -139,6 +158,9 @@ const Login = () => {
         {authError && (
           <p className="text-red-500 text-sm text-center">{authError}</p>
         )}
+        {
+          
+        }
         <div className="py-6">
           <Button variant="largelogin" size="lg">
             Sign In
