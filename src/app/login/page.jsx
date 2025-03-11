@@ -115,7 +115,7 @@ const Login = () => {
             onChange={onChange}
             value={loggedIn.password}
             className="border-[1px] w-full py-1 rounded mt-1 border-[#E5E7EB]"
-            type="text"
+            type="password"
             name="password"
             id="pw"
             placeholder="   Password"
