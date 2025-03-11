@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-    images: {
-        domains: ["images.pexels.com"], // Allow images from Pexels
-      },
+  output: 'export', // Ensures static export (if needed)
+  images: {
+    domains: ["images.pexels.com"], // Allow external images
+  },
 };
 
 export default nextConfig;
